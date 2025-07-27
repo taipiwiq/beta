@@ -1,18 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>ジャンル: {{ unit.name }} の問題に挑戦</h2>
-<p>【{{ current_number }}/{{ total }}問目】</p>
+<div class="container py-4" style="max-width: 700px;">
+  <div class="mb-4">
+<!--     <h2 class="text-center text-primary">{{ unit.name }} の問題に挑戦！</h2> -->
+    <p class="text-center fs-5 text-muted">【{{ current_number }} / {{ total }} 問目】</p>
+  </div>
 
-<form method="POST" action="{{ url_for('quiz.answer', post_id=post.id) }}">
-  <p><strong>問題:</strong> {{ post.question }}</p>
+  <form method="POST" action="{{ url_for('quiz.answer', post_id=post.id) }}" class="p-4 border rounded shadow-sm bg-white">
+    <p class="fs-5 mb-4"><strong>問題:</strong> {{ post.question }}</p>
 
-  <label><input type="radio" name="selected" value="{{ post.select1 }}" required> {{ post.select1 }}</label><br>
-  <label><input type="radio" name="selected" value="{{ post.select2 }}"> {{ post.select2 }}</label><br>
-  <label><input type="radio" name="selected" value="{{ post.select3 }}"> {{ post.select3 }}</label><br>
-  <label><input type="radio" name="selected" value="{{ post.select4 }}"> {{ post.select4 }}</label><br>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="selected" id="option1" value="{{ post.select1 }}" required>
+      <label class="form-check-label" for="option1">{{ post.select1 }}</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="selected" id="option2" value="{{ post.select2 }}">
+      <label class="form-check-label" for="option2">{{ post.select2 }}</label>
+    </div>
+    <div class="form-check mb-2">
+      <input class="form-check-input" type="radio" name="selected" id="option3" value="{{ post.select3 }}">
+      <label class="form-check-label" for="option3">{{ post.select3 }}</label>
+    </div>
+    <div class="form-check mb-4">
+      <input class="form-check-input" type="radio" name="selected" id="option4" value="{{ post.select4 }}">
+      <label class="form-check-label" for="option4">{{ post.select4 }}</label>
+    </div>
 
-  <button type="submit">解答する</button>
-</form>
+    <div class="text-center">
+      <button type="submit" class="btn btn-lg btn-pink rounded-pill px-5" style="background-color: #ff77aa; color: white;">
+        解答
+      </button>
+    </div>
+  </form>
+</div>
 
 {% endblock %}
