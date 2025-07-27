@@ -1,29 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h1>{{ genre.name }}>{{ unit.name }}の問題一覧</h1>
+<div class="container py-4" style="max-width: 900px;">
+  <h1 class="mb-4" style="color: #C35B78;">
+    {{ genre.name }} &gt; {{ unit.name }} の問題一覧
+  </h1>
 
-    <a href="{{ url_for('admin.unit_list', genre_id=genre.id) }}"><div>単元一覧に戻る</div></a>
-    <a href="{{ url_for('admin.home') }}">ホームへ</a>
-    <a href="{{ url_for('admin.create', unit_id=unit.id) }}">問題作成画面</a>
-    
-    {% for post in posts %}
+  <div class="mb-4 d-flex flex-wrap gap-2">
+    <a href="{{ url_for('admin.unit_list', genre_id=genre.id) }}" class="btn btn-outline-secondary rounded-pill">単元一覧に戻る</a>
+    <a href="{{ url_for('admin.home') }}" class="btn btn-outline-primary rounded-pill">ホームへ</a>
+    <a href="{{ url_for('admin.create', unit_id=unit.id) }}" class="btn btn-primary rounded-pill">問題作成画面</a>
+  </div>
 
-    <article>
-        <h2>{{ post.question }}</h2>
-        <a href="/{{post.id}}/update" role="button">編集</a>
+  {% for post in posts %}
+  <article class="mb-4 p-4 bg-white rounded shadow-sm border border-light">
+    <div class="d-flex justify-content-between align-items-center mb-2">
+      <h2 class="h5 mb-0" style="color: #7D3C4A;">{{ post.question }}</h2>
+      <div>
+        <a href="/{{post.id}}/update" class="btn btn-sm btn-outline-info rounded-pill me-2">編集</a>
         <form action="{{ url_for('admin.delete_post', post_id=post.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('削除してもよろしいですか？');">
-            <button type="submit">削除</button>
+          <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill">削除</button>
         </form>
-        <h3>選択肢</h3>
-            <p>1. {{ post.select1 }}</p>
-            <p>2. {{ post.select2 }}</p>
-            <p>3. {{ post.select3 }}</p>
-            <p>4. {{ post.select4 }}</p>
-        <h3>正答</h3>
-        <p>{{ post.answer }}</p>
-        <p>作成日時: {{ post.created_at }}</p>
-    </article>
+      </div>
+    </div>
 
-    {% endfor %}
+    <h3 class="h6 mt-3" style="color: #C05B78;">選択肢</h3>
+    <ul class="list-group list-group-flush mb-3">
+      <li class="list-group-item px-0">1. {{ post.select1 }}</li>
+      <li class="list-group-item px-0">2. {{ post.select2 }}</li>
+      <li class="list-group-item px-0">3. {{ post.select3 }}</li>
+      <li class="list-group-item px-0">4. {{ post.select4 }}</li>
+    </ul>
+
+    <h3 class="h6" style="color: #C05B78;">正答</h3>
+    <p class="fw-semibold">{{ post.answer }}</p>
+
+    <p class="text-muted small">作成日時: {{ post.created_at }}</p>
+  </article>
+  {% else %}
+    <p class="text-center text-muted">まだ問題が登録されていません。</p>
+  {% endfor %}
+</div>
+
 {% endblock %}
