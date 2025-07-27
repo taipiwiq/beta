@@ -18,7 +18,7 @@
 
   <div class="d-grid gap-3 justify-content-center">
     {% for genre in genres %}
-      <a href="{{ url_for('admin.unit_list', genre_id=genre.id) }}"
+      <a href="{{ url_for('admin.unit_create', genre_id=genre.id) }}"
         class="btn btn-outline-pink shadow-sm fs-5 rounded-pill py-2 genre-btn">
     {{ genre.name }}
       </a>
