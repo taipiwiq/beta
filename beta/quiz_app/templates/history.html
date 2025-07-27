@@ -1,36 +1,47 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>{{ current_user.username }} さんの解答履歴</h2>
+<div class="container py-4" style="max-width: 800px;">
+  <h2 class="mb-4 text-primary">{{ current_user.username }} さんの解答履歴</h2>
 
-{% if sessions %}
-<table border="1" cellpadding="8" cellspacing="0">
-  <tr>
-    <th>解答日時</th>
-    <th>単元名</th>
-    <th>かかった時間</th>
-    <th>点数</th>
-    <th>間違えた問題数</th>
-  </tr>
-  {% for s in sessions %}
-  <tr>
-    <td>{{ s.started_at.strftime('%Y-%m-%d %H:%M') }}</td>
-    <td>{{ s.unit.name }}</td>
-    <td>
-      {% set seconds = (s.ended_at - s.started_at).seconds %}
-      {{ seconds // 60 }}分 {{ seconds % 60 }}秒
-    </td>
-    <td>
-      {{ s.correct_count }} / {{ s.total_count }}（{{ (s.correct_count / s.total_count * 100)|round(0) }}%）
-    </td>
-    <td>{{ s.total_count - s.correct_count }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-<p>まだ履歴がありません。</p>
-{% endif %}
+  {% if sessions %}
+  <div class="table-responsive">
+    <table class="table table-bordered table-hover align-middle text-center">
+      <thead class="table-light">
+        <tr>
+          <th>解答日時</th>
+          <th>単元名</th>
+          <th>かかった時間</th>
+          <th>点数</th>
+          <th>誤答数</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for s in sessions %}
+        <tr>
+          <td>{{ s.started_at.strftime('%Y-%m-%d %H:%M') }}</td>
+          <td>{{ s.unit.name }}</td>
+          <td>
+            {% set seconds = (s.ended_at - s.started_at).seconds %}
+            {{ seconds // 60 }}分 {{ seconds % 60 }}秒
+          </td>
+          <td>
+            {{ s.correct_count }} / {{ s.total_count }}
+            （<span class="fw-bold text-success">{{ (s.correct_count / s.total_count * 100)|round(0) }}%</span>）
+          </td>
+          <td class="text-danger">{{ s.total_count - s.correct_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="alert alert-info">まだ履歴がありません。</div>
+  {% endif %}
 
-<a href="{{ url_for('quiz.home') }}">ホームへ戻る</a>
+  <div class="mt-4">
+    <a href="{{ url_for('quiz.home') }}" class="btn btn-outline-primary rounded-pill px-4">ホームへ戻る</a>
+  </div>
+</div>
 
 {% endblock %}
