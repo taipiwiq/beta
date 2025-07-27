@@ -1,36 +1,52 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>科目編集</h1>
+<div class="container py-5">
+  <h2 class="text-center mb-4" style="color: #C35B78;">科目編集</h2>
 
-<form method="POST">
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>科目名</th>
-      <th>削除</th>
-    </tr>
+  <form method="POST">
+    <div class="table-responsive shadow-sm">
+      <table class="table table-bordered align-middle bg-white rounded">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>科目名</th>
+            <th>削除</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for genre in genres %}
+          <tr>
+            <td class="fw-bold">{{ genre.id }}</td>
+            <td>
+              <input type="text" name="name_{{ genre.id }}" value="{{ genre.name }}"
+                     class="form-control rounded-pill">
+            </td>
+            <td>
+              <form action="{{ url_for('admin.delete_genre', id=genre.id) }}"
+                    method="POST" style="display:inline;" 
+                    onsubmit="return confirm('削除してもよろしいですか？');">
+                <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
+                  🗑 削除
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
 
-    {% for genre in genres %}
-    <tr>
-      <td>{{ genre.id }}</td>
-      <td>
-        <input type="text" name="name_{{ genre.id }}" value="{{ genre.name }}">
-      </td>
-      <td>
-        <!-- 削除ボタン用フォーム（POSTで送信） -->
-        <form action="{{ url_for('admin.delete_genre', id=genre.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('削除してもよろしいですか？');">
-          <button type="submit">削除</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
+    <div class="text-center mt-4">
+      <input type="submit" value="保存" class="btn btn-primary rounded-pill px-4 shadow-sm">
+    </div>
+  </form>
 
-  </table>
-
-  <input type="submit" value="保存">
-</form>
-
-<a href="/genre"><button>戻る</button></a>
+  <div class="text-center mt-3">
+    <a href="{{ url_for('admin.genre_list') }}" class="btn btn-outline-secondary rounded-pill px-4 shadow-sm">
+      ← 戻る
+    </a>
+  </div>
+</div>
 
 {% endblock %}
