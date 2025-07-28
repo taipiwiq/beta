@@ -99,7 +99,6 @@ def genre_create():
 @login_required
 @roles_required('admin')
 def genre_edit():
-    genres = Genre.query.order_by(Genre.order.asc()).all()
 
     if request.method == 'POST':
         for genre in genres:
