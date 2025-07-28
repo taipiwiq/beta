@@ -95,7 +95,7 @@ def genre_create():
     return render_template('genre_create.html')
 
 #ジャンル編集画面
-@admin_bp.route('/genre/edit', methods=['GET', 'POST'])
+@admin_bp.route('/genre/edit/<int:genre_id>', methods=['GET', 'POST'])
 @login_required
 @roles_required('admin')
 def genre_edit(genre_id):
@@ -109,7 +109,7 @@ def genre_edit(genre_id):
                 genre.name = new_name
 
         db.session.commit()
-        return redirect('/genre')
+        return redirect(url_for('admin.genre_edit', genre_id=genre_id))
 
     return render_template('genre_update.html', genre=genre)
 
