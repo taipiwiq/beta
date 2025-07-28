@@ -98,7 +98,7 @@ def genre_create():
 @admin_bp.route('/genre/edit', methods=['GET', 'POST'])
 @login_required
 @roles_required('admin')
-def genre_edit():
+def genre_edit(genre_id):
     genre = Genre.query.get_or_404(genre_id)
     
     if request.method == 'POST':
