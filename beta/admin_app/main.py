@@ -95,12 +95,12 @@ def genre_create():
     return render_template('genre_create.html')
 
 #ジャンル編集画面
-@admin_bp.route('/genre/edit/<int:genre_id>', methods=['GET', 'POST'])
+@admin_bp.route('/genre/edit', methods=['GET', 'POST'])
 @login_required
 @roles_required('admin')
-def genre_edit(genre_id):
-    genre = Genre.query.get_or_404(genre_id)
-    
+def genre_edit():
+    genres = Genre.query.all()
+
     if request.method == 'POST':
         for genre in genres:
             new_name = request.form.get(f'name_{genre.id}')
@@ -109,9 +109,9 @@ def genre_edit(genre_id):
                 genre.name = new_name
 
         db.session.commit()
-        return redirect(url_for('admin.genre_edit', genre_id=genre_id))
+        return redirect('/genre')
 
-    return render_template('genre_update.html', genre=genre)
+    return render_template('genre_update.html', genres=genres)
 
 #ジャンル削除処理
 @admin_bp.route('/delete_genre/<int:id>', methods=['POST'])
