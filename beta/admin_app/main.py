@@ -146,8 +146,11 @@ def unit_list(genre_id):
 @login_required
 @roles_required('admin')
 def unit_create(genre_id):
+    genre = Genre.query.get_or_404(genre_id)
+    
     if request.method == 'POST':
         unit_name = request.form.get('name')
+        units = Unit.query.filter_by(genre_id=genre_id).all()
         
         if unit_name:
             new_unit = Unit(name=unit_name, genre_id=genre_id)
