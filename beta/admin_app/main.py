@@ -110,7 +110,7 @@ def genre_edit():
         db.session.commit()
         return redirect('/genre')
 
-    return render_template('genre_update.html', genres=genres)
+    return render_template('genre_update.html')
 
 #ジャンル削除処理
 @admin_bp.route('/delete_genre/<int:id>', methods=['POST'])
