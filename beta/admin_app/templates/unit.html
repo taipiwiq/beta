@@ -6,7 +6,7 @@
 
   <div class="mb-3 d-flex flex-wrap gap-2">
     <a href="{{ url_for('admin.genre_list') }}" class="btn btn-outline-primary rounded-pill px-3">ジャンル一覧に戻る</a>
-    <a href="{{ url_for('admin.unit_create'), genre_id=genre.id }}" class="btn btn-success rounded-pill px-3">単元の追加</a>
+    <a href="{{ url_for('admin.unit_create', genre_id=genre.id) }}" class="btn btn-success rounded-pill px-3">単元の追加</a>
     <a href="{{ url_for('admin.unit_edit', genre_id=genre.id) }}" class="btn btn-warning rounded-pill px-3 text-white">編集</a>
     <a href="{{ url_for('admin.home') }}" class="btn btn-outline-secondary rounded-pill px-3">ホームへ</a>
   </div>
