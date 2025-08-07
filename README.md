@@ -111,7 +111,7 @@ project/
 
 ## 開発者
 
-- **名前**：  たいぴー
+- **名前**：  たいぴー(taip)
 - **GitHub**： [https://github.com/taipiwiq]  
 - **ポートフォリオ**： []
 
